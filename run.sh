@@ -1,6 +1,6 @@
 # chmod +x {fileName}.sh
 
-COMMIT='first Commit'
+COMMIT='second Commit'
 
 # Phân tách commit ra các gạch đầu dòng bằng dấu ';'
 # RELEASE_NOTE=$(echo "$COMMIT" | tr ';' '\n' | sed -e 's/^/- /' -e 's/$/./')

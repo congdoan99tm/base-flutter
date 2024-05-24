@@ -5,6 +5,7 @@ export 'divider.dart';
 export 'dropdown.dart';
 export 'html.dart';
 export 'separator.dart';
+export 'speech_to_text.dart';
 export 'textfield.dart';
 export 'toast.dart';
 export 'webview.dart';

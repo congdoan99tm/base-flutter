@@ -11,7 +11,7 @@ class PrimaryButton extends StatelessWidget {
     this.height,
     this.style,
     this.bgColor = Colors.blue,
-    this.enable = true,
+    this.disable = false,
     this.loading = false,
   });
   final String text;
@@ -20,7 +20,7 @@ class PrimaryButton extends StatelessWidget {
   final double? height;
   final TextStyle? style;
   final Color bgColor;
-  final bool enable;
+  final bool disable;
   final bool loading;
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class PrimaryButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100)),
               backgroundColor:
-                  bgColor.withOpacity((loading || !enable) ? 0.6 : 1),
+                  bgColor.withOpacity((loading || disable) ? 0.6 : 1),
               side: BorderSide.none),
-          onPressed: (enable && !loading) ? onPressed : null,
+          onPressed: (!disable && !loading) ? onPressed : null,
           child: Center(
             child: loading
                 ? LoadingAnimationWidget.prograssiveDots(

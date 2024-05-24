@@ -11,7 +11,8 @@ class TransButton extends StatelessWidget {
     this.height = 44,
     this.style,
     this.colorSide = Colors.blue,
-    this.isLoading = false,
+    this.loading = false,
+    this.disable = false,
   });
   final String text;
   final Function()? onPressed;
@@ -19,7 +20,9 @@ class TransButton extends StatelessWidget {
   final double? height;
   final TextStyle? style;
   final Color colorSide;
-  final bool isLoading;
+  final bool loading;
+  final bool disable;
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -29,12 +32,12 @@ class TransButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100)),
             backgroundColor: Colors.transparent,
             side: BorderSide(color: colorSide)),
-        onPressed: onPressed,
+        onPressed: (!disable && !loading) ? onPressed : null,
         child: SizedBox(
           width: width,
           height: height,
           child: Center(
-            child: isLoading
+            child: loading
                 ? LoadingAnimationWidget.waveDots(
                     color: colorSide,
                     size: 40,
