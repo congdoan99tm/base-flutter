@@ -1,0 +1,9 @@
+name: feature
+description: Generate a feature module
+version: 0.1.0
+
+vars:
+  name:
+    type: string
+    description: Feature name
+    prompt: Feature name?

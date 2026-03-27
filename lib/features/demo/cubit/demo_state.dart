@@ -1,0 +1,3 @@
+class DemoState {
+  const DemoState();
+}
