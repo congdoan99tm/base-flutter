@@ -6,10 +6,8 @@
 .DS_Store
 .atom/
 .build/
-.buildlog/
 .history
 .svn/
-.swiftpm/
 migrate_working_dir/
 
 # IntelliJ related
@@ -33,7 +31,7 @@ migrate_working_dir/
 .pub/
 /build/
 
-# Symbolication related
+# Symbolization related
 app.*.symbols
 
 # Obfuscation related
@@ -43,3 +41,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.config.dart
+*.gr.dart
+*.mapper.dart

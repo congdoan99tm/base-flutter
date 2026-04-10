@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 class SampleRepositoryImpl {
   const SampleRepositoryImpl();
 
-  // TODO: Inject data sources and implement domain repository interface.
   // Example:
   // final SampleRemoteDataSource _remoteDataSource;
   //

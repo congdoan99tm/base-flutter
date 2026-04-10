@@ -1,122 +1,175 @@
-import 'package:flutter/material.dart';
+import 'package:base_flutter_2/bootstrap.dart';
+import 'package:base_flutter_2/app/application.dart';
 
 void main() {
-  runApp(const MyApp());
+  bootstrap(() => const Application());
 }
+// import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// void main() {
+//   runApp(const MyApp());
+// }
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Lazy Load Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//         useMaterial3: true,
+//       ),
+//       home: const NotificationScreen(),
+//     );
+//   }
+// }
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+// class NotificationScreen extends StatefulWidget {
+//   const NotificationScreen({super.key});
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+//   @override
+//   State<NotificationScreen> createState() => _NotificationScreenState();
+// }
 
-  final String title;
+// class _NotificationScreenState extends State<NotificationScreen> {
+//   // 1. Giả lập dữ liệu lớn để test lazy load
+//   final List<String> todayItems = List.generate(20, (index) => "Today Item #$index");
+//   final List<String> olderItems = List.generate(50, (index) => "Older Item #$index");
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text("Notifications"),
+//         backgroundColor: Colors.blue[100],
+//       ),
+//       // 2. Sử dụng CustomScrollView để ghép nhiều danh sách
+//       body: CustomScrollView(
+//         slivers: [
+//           // --- PHẦN 1: TODAY ---
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+//           // Tiêu đề phần Today
+//           const SliverToBoxAdapter(
+//             child: Padding(
+//               padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
+//               child: Text(
+//                 "Today",
+//                 style: TextStyle(
+//                   fontSize: 22,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.black87,
+//                 ),
+//               ),
+//             ),
+//           ),
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+//           // Danh sách Today (vẫn giữ Lazy Load)
+//           SliverPadding(
+//             padding: const EdgeInsets.symmetric(horizontal: 16),
+//             sliver: SliverList(
+//               delegate: SliverChildBuilderDelegate(
+//                 (context, index) {
+//                   // Sử dụng Widget đặc biệt để log việc render
+//                   return TrackedNotificationItem(
+//                     title: todayItems[index],
+//                     color: Colors.blue[50]!,
+//                   );
+//                 },
+//                 childCount: todayItems.length,
+//               ),
+//             ),
+//           ),
 
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
+//           // --- PHẦN 2: OLDER ---
+
+//           // Tiêu đề phần Older
+//           const SliverToBoxAdapter(
+//             child: Padding(
+//               padding: EdgeInsets.fromLTRB(16, 30, 16, 10),
+//               child: Text(
+//                 "Older Notifications",
+//                 style: TextStyle(
+//                   fontSize: 22,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.grey,
+//                 ),
+//               ),
+//             ),
+//           ),
+
+//           // Danh sách Older (vẫn giữ Lazy Load)
+//           SliverPadding(
+//             padding: const EdgeInsets.symmetric(horizontal: 16),
+//             sliver: SliverList(
+//               delegate: SliverChildBuilderDelegate(
+//                 (context, index) {
+//                   return TrackedNotificationItem(
+//                     title: olderItems[index],
+//                     color: Colors.grey[100]!,
+//                   );
+//                 },
+//                 childCount: olderItems.length,
+//               ),
+//             ),
+//           ),
+          
+//           // Thêm một chút padding dưới cùng để không bị sát mép
+//           const SliverToBoxAdapter(child: SizedBox(height: 30)),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // 3. Widget đặc biệt dùng để kiểm tra item nào được render
+// class TrackedNotificationItem extends StatefulWidget {
+//   final String title;
+//   final Color color;
+
+//   const TrackedNotificationItem({
+//     super.key,
+//     required this.title,
+//     required this.color,
+//   });
+
+//   @override
+//   State<TrackedNotificationItem> createState() => _TrackedNotificationItemState();
+// }
+
+// class _TrackedNotificationItemState extends State<TrackedNotificationItem> {
+//   @override
+//   void initState() {
+//     super.initState();
+//     // KHI ITEM NÀY ĐƯỢC KHỞI TẠO (RENDER LẦN ĐẦU), LOG SẼ HIỆN RA
+//     // Bạn hãy theo dõi Debug Console để thấy lazy load hoạt động.
+// //     print("[Rendered] ${widget.title}");
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: const EdgeInsets.symmetric(vertical: 6),
+//       padding: const EdgeInsets.all(16),
+//       decoration: BoxDecoration(
+//         color: widget.color,
+//         borderRadius: BorderRadius.circular(12),
+//         border: Border.all(color: Colors.grey[300]!),
+//       ),
+//       child: Row(
+//         children: [
+//           const Icon(Icons.notifications_active, color: Colors.blue),
+//           const SizedBox(width: 16),
+//           Expanded(
+//             child: Text(
+//               widget.title,
+//               style: const TextStyle(fontSize: 16, color: Colors.black87),
+//             ),
+//           ),
+//           const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+//         ],
+//       ),
+//     );
+//   }
+// }

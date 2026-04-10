@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'sample_model.g.dart';
 
-/// A sample data model (DTO) used for serialising/deserialising API responses.
+/// A sample data model (DTO) used for serializing/deserializing API responses.
 /// Generated code: run `flutter pub run build_runner build --delete-conflicting-outputs`
 @JsonSerializable()
 class SampleModel {
