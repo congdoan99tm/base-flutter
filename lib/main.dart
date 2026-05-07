@@ -1,175 +1,130 @@
-import 'package:base_flutter_2/bootstrap.dart';
-import 'package:base_flutter_2/app/application.dart';
-
-void main() {
-  bootstrap(() => const Application());
-}
-// import 'package:flutter/material.dart';
+// import 'package:base_flutter_2/bootstrap.dart';
+// import 'package:base_flutter_2/app/application.dart';
 
 // void main() {
-//   runApp(const MyApp());
+//   bootstrap(() => const Application());
 // }
+import 'package:flutter/material.dart';
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+void main() {
+  runApp(const MyApp());
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Lazy Load Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         useMaterial3: true,
-//       ),
-//       home: const NotificationScreen(),
-//     );
-//   }
-// }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-// class NotificationScreen extends StatefulWidget {
-//   const NotificationScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const MainScrollScreen(),
+    );
+  }
+}
 
-//   @override
-//   State<NotificationScreen> createState() => _NotificationScreenState();
-// }
+class MainScrollScreen extends StatelessWidget {
+  const MainScrollScreen({super.key});
 
-// class _NotificationScreenState extends State<NotificationScreen> {
-//   // 1. Giả lập dữ liệu lớn để test lazy load
-//   final List<String> todayItems = List.generate(20, (index) => "Today Item #$index");
-//   final List<String> olderItems = List.generate(50, (index) => "Older Item #$index");
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DefaultTabController(
+        length: 3,
+        child: NestedScrollView(
+          // Phần 1: Header cố định và TabBar (Cùng nằm trong Sliver)
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              // Thành phần cố định phía trên (ví dụ: Banner, Profile info...)
+              SliverToBoxAdapter(
+                child: Container(
+                  height: 200,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.blue, Colors.purple],
+                    ),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "THÀNH PHẦN CỐ ĐỊNH\n(Cuộn để ẩn)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Notifications"),
-//         backgroundColor: Colors.blue[100],
-//       ),
-//       // 2. Sử dụng CustomScrollView để ghép nhiều danh sách
-//       body: CustomScrollView(
-//         slivers: [
-//           // --- PHẦN 1: TODAY ---
+              // Thành phần TabBar: Sẽ được "ghim" (pin) khi cuộn tới đỉnh
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverAppBarDelegate(
+                  Container(
+                    color: Colors.white,
+                    child: const TabBar(
+                      labelColor: Colors.blue,
+                      unselectedLabelColor: Colors.grey,
+                      indicatorColor: Colors.blue,
+                      tabs: [
+                        Tab(icon: Icon(Icons.list), text: "Danh sách"),
+                        Tab(icon: Icon(Icons.grid_view), text: "Lưới"),
+                        Tab(icon: Icon(Icons.settings), text: "Cài đặt"),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ];
+          },
 
-//           // Tiêu đề phần Today
-//           const SliverToBoxAdapter(
-//             child: Padding(
-//               padding: EdgeInsets.fromLTRB(16, 20, 16, 8),
-//               child: Text(
-//                 "Today",
-//                 style: TextStyle(
-//                   fontSize: 22,
-//                   fontWeight: FontWeight.bold,
-//                   color: Colors.black87,
-//                 ),
-//               ),
-//             ),
-//           ),
+          // Phần 2: Nội dung Tab có thể vuốt ngang (TabBarView)
+          body: TabBarView(
+            children: [
+              // Tab 1: Danh sách dài để kiểm tra scroll
+              ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: 50,
+                itemBuilder: (context, index) => Card(
+                  child: ListTile(title: Text("Vật phẩm thứ $index")),
+                ),
+              ),
 
-//           // Danh sách Today (vẫn giữ Lazy Load)
-//           SliverPadding(
-//             padding: const EdgeInsets.symmetric(horizontal: 16),
-//             sliver: SliverList(
-//               delegate: SliverChildBuilderDelegate(
-//                 (context, index) {
-//                   // Sử dụng Widget đặc biệt để log việc render
-//                   return TrackedNotificationItem(
-//                     title: todayItems[index],
-//                     color: Colors.blue[50]!,
-//                   );
-//                 },
-//                 childCount: todayItems.length,
-//               ),
-//             ),
-//           ),
+              // Tab 2: Grid view
+              GridView.count(
+                crossAxisCount: 2,
+                children: List.generate(20, (index) => Container(
+                  margin: const EdgeInsets.all(8),
+                  color: Colors.orangeAccent,
+                  child: Center(child: Text("Ô $index")),
+                )),
+              ),
 
-//           // --- PHẦN 2: OLDER ---
+              // Tab 3: Nội dung đơn giản
+              const Center(child: Text("Nội dung tab Cài đặt")),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-//           // Tiêu đề phần Older
-//           const SliverToBoxAdapter(
-//             child: Padding(
-//               padding: EdgeInsets.fromLTRB(16, 30, 16, 10),
-//               child: Text(
-//                 "Older Notifications",
-//                 style: TextStyle(
-//                   fontSize: 22,
-//                   fontWeight: FontWeight.bold,
-//                   color: Colors.grey,
-//                 ),
-//               ),
-//             ),
-//           ),
+/// Helper class để tạo SliverPersistentHeader cho TabBar
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
 
-//           // Danh sách Older (vẫn giữ Lazy Load)
-//           SliverPadding(
-//             padding: const EdgeInsets.symmetric(horizontal: 16),
-//             sliver: SliverList(
-//               delegate: SliverChildBuilderDelegate(
-//                 (context, index) {
-//                   return TrackedNotificationItem(
-//                     title: olderItems[index],
-//                     color: Colors.grey[100]!,
-//                   );
-//                 },
-//                 childCount: olderItems.length,
-//               ),
-//             ),
-//           ),
-          
-//           // Thêm một chút padding dưới cùng để không bị sát mép
-//           const SliverToBoxAdapter(child: SizedBox(height: 30)),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  final Widget _tabBar;
 
-// // 3. Widget đặc biệt dùng để kiểm tra item nào được render
-// class TrackedNotificationItem extends StatefulWidget {
-//   final String title;
-//   final Color color;
+  @override
+  double get minExtent => 70.0; // Chiều cao tối thiểu của TabBar
+  @override
+  double get maxExtent => 70.0; // Chiều cao tối đa của TabBar
 
-//   const TrackedNotificationItem({
-//     super.key,
-//     required this.title,
-//     required this.color,
-//   });
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return _tabBar;
+  }
 
-//   @override
-//   State<TrackedNotificationItem> createState() => _TrackedNotificationItemState();
-// }
-
-// class _TrackedNotificationItemState extends State<TrackedNotificationItem> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     // KHI ITEM NÀY ĐƯỢC KHỞI TẠO (RENDER LẦN ĐẦU), LOG SẼ HIỆN RA
-//     // Bạn hãy theo dõi Debug Console để thấy lazy load hoạt động.
-// //     print("[Rendered] ${widget.title}");
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.symmetric(vertical: 6),
-//       padding: const EdgeInsets.all(16),
-//       decoration: BoxDecoration(
-//         color: widget.color,
-//         borderRadius: BorderRadius.circular(12),
-//         border: Border.all(color: Colors.grey[300]!),
-//       ),
-//       child: Row(
-//         children: [
-//           const Icon(Icons.notifications_active, color: Colors.blue),
-//           const SizedBox(width: 16),
-//           Expanded(
-//             child: Text(
-//               widget.title,
-//               style: const TextStyle(fontSize: 16, color: Colors.black87),
-//             ),
-//           ),
-//           const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
+}
