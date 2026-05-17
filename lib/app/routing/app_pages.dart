@@ -2,12 +2,12 @@
 ///
 /// - [path]: used in [GoRoute] `path` and `context.go()`
 /// - [name]: used for named navigation via `context.goNamed()`
-abstract class AppRoutes {
+abstract class AppPages {
   // ── Paths ─────────────────────────────────────────────────────────────────
   static const String homePath = '/';
-  static const String demoPath = 'demo'; // child of home → full: /demo
+  static const String userPath = '/user';
 
   // ── Names ─────────────────────────────────────────────────────────────────
   static const String homeName = 'home';
-  static const String demoName = 'demo';
+  static const String userName = 'user';
 }

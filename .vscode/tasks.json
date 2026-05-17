@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Runner: Active File Only",
+      "type": "shell",
+      "command": "flutter pub run build_runner build --build-filter=\"${relativeFileDirname}/${fileBasenameNoExtension}.*g.dart\"",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": true
+      }
+    },
+    {
+      "label": "Build Runner: Active Directory",
+      "type": "shell",
+      "command": "flutter pub run build_runner build --build-filter=\"${relativeFileDirname}/**\"",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": true
+      }
+    },
+    {
+      "label": "Build Runner: Custom Folder",
+      "type": "shell",
+      "command": "flutter pub run build_runner build --build-filter=\"${input:folderName}/**\"",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": true
+      }
+    },
+    {
+      "label": "Build Runner: Full Project",
+      "type": "shell",
+      "command": "flutter pub run build_runner build --delete-conflicting-outputs",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "folderName",
+      "type": "promptString",
+      "description": "Nhập thư mục cần build (ví dụ: lib/features/user)",
+      "default": "lib/features/user"
+    }
+  ]
+}

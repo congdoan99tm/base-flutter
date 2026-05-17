@@ -47,7 +47,11 @@ class MainScrollScreen extends StatelessWidget {
                     child: Text(
                       "THÀNH PHẦN CỐ ĐỊNH\n(Cuộn để ẩn)",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -82,19 +86,21 @@ class MainScrollScreen extends StatelessWidget {
               ListView.builder(
                 padding: const EdgeInsets.all(8),
                 itemCount: 50,
-                itemBuilder: (context, index) => Card(
-                  child: ListTile(title: Text("Vật phẩm thứ $index")),
-                ),
+                itemBuilder: (context, index) =>
+                    Card(child: ListTile(title: Text("Vật phẩm thứ $index"))),
               ),
 
               // Tab 2: Grid view
               GridView.count(
                 crossAxisCount: 2,
-                children: List.generate(20, (index) => Container(
-                  margin: const EdgeInsets.all(8),
-                  color: Colors.orangeAccent,
-                  child: Center(child: Text("Ô $index")),
-                )),
+                children: List.generate(
+                  20,
+                  (index) => Container(
+                    margin: const EdgeInsets.all(8),
+                    color: Colors.orangeAccent,
+                    child: Center(child: Text("Ô $index")),
+                  ),
+                ),
               ),
 
               // Tab 3: Nội dung đơn giản
@@ -119,7 +125,11 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 70.0; // Chiều cao tối đa của TabBar
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return _tabBar;
   }
 
