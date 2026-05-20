@@ -24,7 +24,10 @@ abstract class BaseRepository {
       } else {
         message = _mapStatusCodeToMessage(e.response?.statusCode);
       }
-      return ServerFailure(message: message, statusCode: e.response?.statusCode);
+      return ServerFailure(
+        message: message,
+        statusCode: e.response?.statusCode,
+      );
     }
 
     return UnknownFailure(message: e.message ?? "Lỗi kết nối");

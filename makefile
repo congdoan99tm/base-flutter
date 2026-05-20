@@ -8,14 +8,6 @@ get:
 build_runner:
 	flutter pub run build_runner build --delete-conflicting-outputs
 
-# Chạy build runner cho một thư mục chỉ định, ví dụ: make build_dir path=lib/features/user
-build_dir:
-	@if [ "$(path)" = "" ]; then \
-		echo "Bạn cần cung cấp path! Cú pháp: make build_dir path=lib/features/user"; \
-		exit 1; \
-	fi
-	flutter pub run build_runner build --build-filter="$(path)/**"
-
 # Xóa cache Flutter và sau đó pub get lại
 clean:
 	flutter clean

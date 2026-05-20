@@ -2,21 +2,21 @@ import 'package:base_flutter_2/core/presentation/base_cubit.dart';
 import 'package:base_flutter_2/core/presentation/base_state.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/usecases/get_user_usecase.dart';
-import 'user_state.dart';
+import '../../data/repositories/news_repository.dart';
+import 'news_state.dart';
 
 @injectable
-class UserCubit extends BaseCubit<UserState> {
-  UserCubit(this._getUserUseCase) : super(const UserState());
+class NewsCubit extends BaseCubit<NewsState> {
+  NewsCubit(this._newsRepository) : super(const NewsState());
 
-  final GetUserUseCase _getUserUseCase;
+  final NewsRepository _newsRepository;
 
-  Future<void> fetchUser() async {
+  Future<void> fetchNews() async {
     await handleResult(
-      action: _getUserUseCase.call,
+      action: _newsRepository.getNews,
       onLoading: (state) => state.copyWith(status: BaseStatus.loading),
-      onSuccess: (state, user) =>
-          state.copyWith(status: BaseStatus.success, user: user),
+      onSuccess: (state, data) =>
+          state.copyWith(status: BaseStatus.success, news: data),
       onFailure: (state, message) =>
           state.copyWith(status: BaseStatus.failure, errorMessage: message),
     );
