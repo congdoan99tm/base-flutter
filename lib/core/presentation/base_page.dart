@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../common/extensions/context_extension.dart';
 import 'base_life_circle_mixin.dart';
 import 'base_state.dart';
 
@@ -156,18 +157,20 @@ class BaseErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colorScheme;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 56, color: Colors.redAccent),
+            Icon(Icons.error_outline, size: 56, color: colors.error),
             const SizedBox(height: 16),
             Text(
               message ?? 'Đã có lỗi xảy ra',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: context.textTheme.bodyLarge,
             ),
             if (onRetry != null) ...[
               const SizedBox(height: 24),

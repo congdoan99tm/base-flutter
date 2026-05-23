@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:base_flutter_2/core/presentation/base_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:base_flutter_2/common/extensions/context_extension.dart';
+import 'package:base_flutter_2/core/theme/app_colors.dart';
 import 'cubit/user_cubit.dart';
 import 'cubit/user_state.dart';
 import 'widgets/user_card.dart';
@@ -20,7 +22,7 @@ class UserPage extends BasePage<UserCubit, UserState> {
   void onInit(BuildContext context, UserCubit cubit) => cubit.fetchUser();
 
   @override
-  Color? get backgroundColor => const Color(0xFFF8F9FA);
+  Color? get backgroundColor => null;
 
   @override
   EdgeInsetsGeometry get contentPadding => const EdgeInsets.all(20);
@@ -28,14 +30,14 @@ class UserPage extends BasePage<UserCubit, UserState> {
   @override
   PreferredSizeWidget? buildAppBar(BuildContext context) {
     return AppBar(
-      title: const Text(
+      title: Text(
         'Hồ sơ người dùng',
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
       elevation: 0,
-      backgroundColor: Colors.transparent,
-      foregroundColor: Colors.black,
+      backgroundColor: context.colorScheme.surface,
+      foregroundColor: context.colors.textPrimary,
     );
   }
 

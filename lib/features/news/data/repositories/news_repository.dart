@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
-import 'package:base_flutter_2/core/utils/result.dart';
 import 'package:base_flutter_2/core/repositories/base_repository.dart';
+import 'package:base_flutter_2/core/error/failures.dart';
+import 'package:base_flutter_2/core/result/result.dart';
 import '../datasources/news_api_service.dart';
 import '../models/news_model.dart';
 
@@ -10,7 +11,7 @@ class NewsRepository extends BaseRepository {
 
   final NewsApiService _apiService;
 
-  Future<Result<NewsModel>> getNews() async {
+  Future<Result<NewsModel, Failure>> getNews() async {
     return safeCall(() async {
       final response = await _apiService.getNews();
       return response.data;

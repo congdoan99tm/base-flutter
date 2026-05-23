@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:base_flutter_2/core/utils/result.dart';
+import 'package:base_flutter_2/core/error/failures.dart';
+import 'package:base_flutter_2/core/result/result.dart';
 import '../entities/user_entity.dart';
 import '../repositories/user_repository.dart';
 
@@ -9,7 +10,7 @@ class GetUserUseCase {
 
   final UserRepository _userRepository;
 
-  Future<Result<UserEntity>> call() async {
+  Future<Result<UserEntity, Failure>> call() async {
     return _userRepository.getUser();
   }
 }

@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:base_flutter_2/core/error/failures.dart';
-import 'package:base_flutter_2/core/utils/result.dart';
+import 'package:base_flutter_2/core/result/result.dart';
 
 abstract class BaseRepository {
-  Future<Result<T>> safeCall<T>(Future<T> Function() call) async {
+  Future<Result<T, Failure>> safeCall<T>(Future<T> Function() call) async {
     try {
       final response = await call();
       return Success(response);
