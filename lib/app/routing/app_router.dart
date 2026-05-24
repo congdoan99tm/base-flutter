@@ -8,10 +8,13 @@ import '../../features/user/presentation/user_page.dart';
 
 /// Centralized routing configuration for the application.
 abstract class AppRouter {
+  static final navigatorKey = GlobalKey<NavigatorState>();
+  static get context => navigatorKey.currentContext;
   static final router = GoRouter(
     initialLocation: AppPages.homePath,
     debugLogDiagnostics: kDebugMode,
     routes: _routes,
+    navigatorKey: navigatorKey,
     errorBuilder: (context, state) => Scaffold(
       body: Center(
         child: Text(
@@ -26,12 +29,12 @@ abstract class AppRouter {
     GoRoute(
       path: AppPages.homePath,
       name: AppPages.homeName,
-      builder: (context, state) => const Scaffold(
-        body: Center(child: Text('Home Page')),
-      ),
-      routes: [
-        UserPage.route,
-      ],
+      builder: (context, state) =>
+          const Scaffold(body: Center(child: Text('Home Page'))),
+      routes: [UserPage.route],
     ),
   ];
 }
+
+get rootKey => AppRouter.navigatorKey;
+get rootContext => AppRouter.context;

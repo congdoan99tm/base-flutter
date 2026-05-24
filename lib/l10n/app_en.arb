@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "emailEmptyInvalid": "Email cannot be empty",
+  "emailInvalid": "Invalid email address",
+  "passEmptyInvalid": "Password cannot be empty",
+  "passLengthInvalid": "Password must be at least 6 characters",
+  "passInvalid": "Invalid password",
+  "emptyValid": "This field is required",
+  "phoneEmptyInvalid": "Phone number cannot be empty",
+  "phoneLengthInvalid": "Phone number must be between 9 and 12 digits",
+  "phoneInvalid": "Invalid phone number",
+  "otpEmptyInvalid": "OTP cannot be empty",
+  "otpInvalid": "Invalid OTP",
+  "otpLengthInvalid": "OTP must be 4 characters long"
+}

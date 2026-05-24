@@ -16,7 +16,12 @@ class AppLogger {
     }
   }
 
-  static void error(String message, {Object? error, StackTrace? stackTrace, String? tag}) {
+  static void e(
+    String message, {
+    Object? error,
+    StackTrace? stackTrace,
+    String? tag,
+  }) {
     if (kDebugMode) {
       debugPrint('[ERROR]${tag != null ? '[$tag]' : ''} $message');
       if (error != null) debugPrint('  Error: $error');

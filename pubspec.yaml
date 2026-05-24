@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   equatable: ^2.0.5
   flutter_bloc: ^8.1.6
   injectable: ^2.5.0
@@ -46,6 +48,10 @@ dependencies:
   firebase_crashlytics: ^5.1.0
   intl: ^0.20.2
   json_annotation: ^4.9.0
+  flutter_screenutil: ^5.9.3
+  gap: ^3.0.1
+  table_calendar: ^3.2.0
+  html: ^0.15.6
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +73,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
