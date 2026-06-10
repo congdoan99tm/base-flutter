@@ -8,15 +8,23 @@ import 'package:go_router/go_router.dart';
 extension BuildContextExtension on BuildContext {
   /// Use only when you need the full [MediaQueryData] object.
   MediaQueryData get mediaQuery => MediaQuery.of(this);
-
   Size get size => MediaQuery.sizeOf(this);
   double get screenWidth => size.width;
   double get screenHeight => size.height;
   double get shortestSide => size.shortestSide;
   double get longestSide => size.longestSide;
+
   Orientation get orientation => MediaQuery.orientationOf(this);
   bool get isLandscape => orientation == Orientation.landscape;
   bool get isPortrait => !isLandscape;
+  DeviceType get deviceType {
+    return size.shortestSide >= 600 ? DeviceType.tablet : DeviceType.mobile;
+  }
+
+  bool get isMobile => deviceType == DeviceType.mobile;
+
+  bool get isTablet => deviceType == DeviceType.tablet;
+
   EdgeInsets get padding => MediaQuery.paddingOf(this);
   EdgeInsets get viewPadding => MediaQuery.viewPaddingOf(this);
   EdgeInsets get viewInsets => MediaQuery.viewInsetsOf(this);
@@ -28,3 +36,5 @@ extension BuildContextExtension on BuildContext {
   GoRouter get router => GoRouter.of(this);
   ScaffoldMessengerState get scaffoldMessenger => ScaffoldMessenger.of(this);
 }
+
+enum DeviceType { mobile, tablet }
